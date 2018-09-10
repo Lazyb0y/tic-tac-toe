@@ -17,4 +17,5 @@ window.onload = function () {
     /* Initializing the Phaser 3 framework */
     T3.game = new Phaser.Game(T3.GameConfig);
     window.focus();
+    window.addEventListener('contextmenu', event => event.preventDefault());
 };
