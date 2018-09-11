@@ -126,6 +126,8 @@ class GameScene extends Phaser.Scene {
 
         let turnCube = this.add.sprite(cube.center.x, cube.center.y, this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube', 5);
         turnCube.setOrigin(0.5, 0.5);
+
+        this.botTurn();
     }
 
     getSelectedCube(x, y) {
@@ -177,5 +179,34 @@ class GameScene extends Phaser.Scene {
         }
 
         return null;
+    }
+
+    botTurn() {
+        let nextEmptyCube = this.nextRandomEmptyCube();
+        if (!nextEmptyCube) {
+            return;
+        }
+        nextEmptyCube.used = true;
+
+        let turnCube = this.add.sprite(nextEmptyCube.center.x, nextEmptyCube.center.y, this.firstPlayer === PlayerType.Bot ? 'crossCube' : 'circleCube', 5);
+        turnCube.setOrigin(0.5, 0.5);
+    }
+
+    nextRandomEmptyCube() {
+        let emptyCubes = [];
+        for (let i = 0; i < this.boardState.length; i++) {
+            let cube = this.boardState[i];
+            if (!cube.used) {
+                emptyCubes.push(i);
+            }
+        }
+
+        if (emptyCubes.length === 0) {
+            return null;
+        }
+        else {
+            let randomCube = Phaser.Utils.Array.GetRandom(emptyCubes);
+            return this.boardState[randomCube];
+        }
     }
 }
