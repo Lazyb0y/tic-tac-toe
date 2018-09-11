@@ -2,6 +2,9 @@ var T3 = T3 || {};
 
 T3.GameOptions = {
     aspectRatio: 16 / 9,
+    scenes: {
+        bootScene: "BootScene"
+    }
 };
 
 /* Resizing the game to cover the wider area possible */
@@ -28,7 +31,7 @@ window.onload = function () {
         width: width,
         height: width * T3.GameOptions.aspectRatio,
         backgroundColor: 0x14BDAC,
-        scene: []
+        scene: [BootScene]
     };
 
     /* Initializing the Phaser 3 framework */
