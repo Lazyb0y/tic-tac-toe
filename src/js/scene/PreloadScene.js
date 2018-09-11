@@ -14,6 +14,9 @@ class PreloadScene extends Phaser.Scene {
 
         /* Adding and configuring progress bar */
         this.setupProgressBar();
+
+        /* Loading images and sprites */
+        this.load.image("gametitle", "assets/sprites/gametitle.png");
     }
 
     create() {
