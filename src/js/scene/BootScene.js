@@ -8,6 +8,6 @@ class BootScene extends Phaser.Scene {
     }
 
     create() {
-        console.log("Created BootScene");
+        this.scene.start(T3.GameOptions.scenes.preloadScene);
     }
 }
