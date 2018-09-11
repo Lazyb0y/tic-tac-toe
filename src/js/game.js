@@ -26,7 +26,7 @@ function resizeGame() {
 }
 
 window.onload = function () {
-    let width = 900;
+    let width = 1080;
 
     T3.GameConfig = {
         width: width,
