@@ -17,6 +17,17 @@ class PreloadScene extends Phaser.Scene {
 
         /* Loading images and sprites */
         this.load.image("gametitle", "assets/sprites/gametitle.png");
+        this.load.image("chooseplayer", "assets/sprites/chooseplayer.png");
+
+        this.load.spritesheet("cross", "assets/sprites/crossspritesheet.png", {
+            frameWidth: 400,
+            frameHeight: 400
+        });
+
+        this.load.spritesheet("circle", "assets/sprites/circlespritesheet.png", {
+            frameWidth: 400,
+            frameHeight: 400
+        });
     }
 
     create() {
