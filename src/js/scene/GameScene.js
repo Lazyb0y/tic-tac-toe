@@ -5,6 +5,7 @@ class GameScene extends Phaser.Scene {
 
     init() {
         this.allowUserInput = false;
+        this.boardState = null;
 
         this.gameTitle = null;
         this.restart = null;
@@ -31,7 +32,23 @@ class GameScene extends Phaser.Scene {
         }, this);
         this.restart.alpha = 0;
 
+        this.initBoard();
         this.showEntryAnimation();
+    }
+
+    initBoard() {
+        this.boardState = [];
+
+        /* Initializing individual empty element */
+        this.boardState.push({used: null, player: null, index: 0, center: {x: null, y: null}});
+        this.boardState.push({used: null, player: null, index: 1, center: {x: null, y: null}});
+        this.boardState.push({used: null, player: null, index: 2, center: {x: null, y: null}});
+        this.boardState.push({used: null, player: null, index: 3, center: {x: null, y: null}});
+        this.boardState.push({used: null, player: null, index: 4, center: {x: null, y: null}});
+        this.boardState.push({used: null, player: null, index: 5, center: {x: null, y: null}});
+        this.boardState.push({used: null, player: null, index: 6, center: {x: null, y: null}});
+        this.boardState.push({used: null, player: null, index: 7, center: {x: null, y: null}});
+        this.boardState.push({used: null, player: null, index: 8, center: {x: null, y: null}});
     }
 
     showEntryAnimation() {
