@@ -6,11 +6,11 @@ T3.GameOptions = {
 
 /* Resizing the game to cover the wider area possible */
 function resizeGame() {
-    var canvas = document.querySelector("canvas");
-    var windowWidth = window.innerWidth;
-    var windowHeight = window.innerHeight;
-    var windowRatio = windowWidth / windowHeight;
-    var gameRatio = T3.game.config.width / T3.game.config.height;
+    let canvas = document.querySelector("canvas");
+    let windowWidth = window.innerWidth;
+    let windowHeight = window.innerHeight;
+    let windowRatio = windowWidth / windowHeight;
+    let gameRatio = T3.game.config.width / T3.game.config.height;
     if (windowRatio < gameRatio) {
         canvas.style.width = windowWidth + "px";
         canvas.style.height = (windowWidth / gameRatio) + "px";
