@@ -36,25 +36,30 @@ class MainMenuScene extends Phaser.Scene {
         let timerConfig = {
             delay: T3.GameOptions.animations.iconAppearAnimationDelay,
             callback: function () {
-                let crossAnimConfig = {
-                    key: 'drawCrossAnim',
-                    frames: this.anims.generateFrameNumbers('cross', {
-                        start: 0,
-                        end: 5
-                    }),
-                    frameRate: 25,
-                };
-                this.anims.create(crossAnimConfig);
 
-                let circleAnimConfig = {
-                    key: 'drawCircleAnim',
-                    frames: this.anims.generateFrameNumbers('circle', {
-                        start: 0,
-                        end: 5
-                    }),
-                    frameRate: 25,
-                };
-                this.anims.create(circleAnimConfig);
+                if (!this.anims.get('drawCrossAnim')) {
+                    let crossAnimConfig = {
+                        key: 'drawCrossAnim',
+                        frames: this.anims.generateFrameNumbers('cross', {
+                            start: 0,
+                            end: 5
+                        }),
+                        frameRate: 25,
+                    };
+                    this.anims.create(crossAnimConfig);
+                }
+
+                if (!this.anims.get('drawCircleAnim')) {
+                    let circleAnimConfig = {
+                        key: 'drawCircleAnim',
+                        frames: this.anims.generateFrameNumbers('circle', {
+                            start: 0,
+                            end: 5
+                        }),
+                        frameRate: 25,
+                    };
+                    this.anims.create(circleAnimConfig);
+                }
 
                 this.crossIcon.on('animationcomplete', function (animation) {
                     if (animation.key === 'drawCrossAnim') {
