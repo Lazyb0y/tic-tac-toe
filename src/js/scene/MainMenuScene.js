@@ -14,14 +14,55 @@ class MainMenuScene extends Phaser.Scene {
         gameTitle.setOrigin(0.5, 0);
 
         /* Player icons */
-        let crossIcon = this.add.sprite(T3.game.config.width / 4 + 50, T3.game.config.height / 2, "cross", 5);
-        crossIcon.setOrigin(0.5, 0);
+        this.crossIcon = this.add.sprite(T3.game.config.width / 4 + 50, T3.game.config.height / 2, "cross", 0);
+        this.crossIcon.setOrigin(0.5, 0);
 
-        let circleIcon = this.add.sprite((T3.game.config.width / 4) * 3 - 50, T3.game.config.height / 2, "circle", 5);
-        circleIcon.setOrigin(0.5, 0);
+        this.circleIcon = this.add.sprite((T3.game.config.width / 4) * 3 - 50, T3.game.config.height / 2, "circle", 0);
+        this.circleIcon.setOrigin(0.5, 0);
 
         /* Choose player text */
         let choosePlayer = this.add.image(T3.game.config.width / 2, (T3.game.config.height / 4) * 3, "chooseplayer");
         choosePlayer.setOrigin(0.5, 0);
+
+        this.showEntryAnimation();
+    }
+
+    showEntryAnimation() {
+        let timerConfig = {
+            delay: T3.GameOptions.animations.iconAppearAnimationDelay,
+            callback: function () {
+                let crossAnimConfig = {
+                    key: 'drawCrossAnim',
+                    frames: this.anims.generateFrameNumbers('cross', {
+                        start: 0,
+                        end: 5
+                    }),
+                    frameRate: 25,
+                };
+                this.anims.create(crossAnimConfig);
+
+                let circleAnimConfig = {
+                    key: 'drawCircleAnim',
+                    frames: this.anims.generateFrameNumbers('circle', {
+                        start: 0,
+                        end: 5
+                    }),
+                    frameRate: 25,
+                };
+                this.anims.create(circleAnimConfig);
+
+                this.crossIcon.on('animationcomplete', function (animation) {
+                    if (animation.key === 'drawCrossAnim') {
+                        this.circleIcon.anims.play('drawCircleAnim');
+                    }
+                }, this);
+
+                this.crossIcon.anims.play('drawCrossAnim');
+            },
+            callbackScope: this,
+            paused: false
+        };
+
+        this.time.addEvent(timerConfig);
     }
 }

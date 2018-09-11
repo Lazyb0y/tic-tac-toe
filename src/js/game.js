@@ -2,6 +2,9 @@ var T3 = T3 || {};
 
 T3.GameOptions = {
     aspectRatio: 16 / 9,
+    animations: {
+        iconAppearAnimationDelay: 500
+    },
     scenes: {
         bootScene: "BootScene",
         preloadScene: "PreloadScene",
