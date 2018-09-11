@@ -21,6 +21,8 @@ class GameScene extends Phaser.Scene {
         /* Game board */
         this.board = this.add.sprite(T3.game.config.width / 2, T3.game.config.height / 2, "board", 0);
         this.board.setOrigin(0.5, 0.5);
+        this.board.setInteractive();
+        this.board.on('pointerdown', this.handleBoardTap, this);
 
         this.restart = this.add.image(T3.game.config.width / 2, T3.game.config.height - 90, "restart");
         this.restart.setOrigin(0.5, 1);
@@ -109,5 +111,61 @@ class GameScene extends Phaser.Scene {
         };
 
         this.time.addEvent(timerConfig);
+    }
+
+    handleBoardTap(event) {
+        let selectedCube = this.getSelectedCube(event.x, event.y);
+        console.log(selectedCube);
+    }
+
+    getSelectedCube(x, y) {
+        let relativeX = x - this.board.getTopLeft().x;
+        let relativeY = y - this.board.getTopLeft().y;
+
+        let cubeSize = this.board.height / 3;
+        let cube1 = cubeSize;
+        let cube2 = cubeSize * 2;
+        let cube3 = cubeSize * 3;
+
+        /* row 1 */
+        if ((0 < relativeX && relativeX < cube1) && (0 < relativeY && relativeY < cube1)) {
+            return 0;
+        }
+
+        if ((cube1 < relativeX && relativeX < cube2) && (0 < relativeY && relativeY < cube1)) {
+            return 1;
+        }
+
+        if ((cube2 < relativeX && relativeX < cube3) && (0 < relativeY && relativeY < cube1)) {
+            return 2;
+        }
+
+        /* row 2 */
+        if ((0 < relativeX && relativeX < cube1) && (cube1 < relativeY && relativeY < cube2)) {
+            return 3;
+        }
+
+        if ((cube1 < relativeX && relativeX < cube2) && (cube1 < relativeY && relativeY < cube2)) {
+            return 4;
+        }
+
+        if ((cube2 < relativeX && relativeX < cube3) && (cube1 < relativeY && relativeY < cube2)) {
+            return 5;
+        }
+
+        /* row 3 */
+        if ((0 < relativeX && relativeX < cube1) && (cube2 < relativeY && relativeY < cube3)) {
+            return 6;
+        }
+
+        if ((cube1 < relativeX && relativeX < cube2) && (cube2 < relativeY && relativeY < cube3)) {
+            return 7;
+        }
+
+        if ((cube2 < relativeX && relativeX < cube3) && (cube2 < relativeY && relativeY < cube3)) {
+            return 8;
+        }
+
+        return null;
     }
 }
