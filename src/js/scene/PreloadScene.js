@@ -30,6 +30,16 @@ class PreloadScene extends Phaser.Scene {
             frameHeight: 400
         });
 
+        this.load.spritesheet("crossCube", "assets/sprites/crosscube.png", {
+            frameWidth: 250,
+            frameHeight: 250
+        });
+
+        this.load.spritesheet("circleCube", "assets/sprites/circlecube.png", {
+            frameWidth: 250,
+            frameHeight: 250
+        });
+
         this.load.spritesheet("board", "assets/sprites/boardspritesheet.png", {
             frameWidth: 900,
             frameHeight: 900
