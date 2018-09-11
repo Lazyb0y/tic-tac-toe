@@ -8,7 +8,8 @@ T3.GameOptions = {
     scenes: {
         bootScene: "BootScene",
         preloadScene: "PreloadScene",
-        mainMenuScene: "MainMenuScene"
+        mainMenuScene: "MainMenuScene",
+        gameScene: "GameScene"
     }
 };
 
@@ -36,7 +37,7 @@ window.onload = function () {
         width: width,
         height: width * T3.GameOptions.aspectRatio,
         backgroundColor: 0x14BDAC,
-        scene: [BootScene, PreloadScene, MainMenuScene]
+        scene: [BootScene, PreloadScene, MainMenuScene, GameScene]
     };
 
     /* Initializing the Phaser 3 framework */

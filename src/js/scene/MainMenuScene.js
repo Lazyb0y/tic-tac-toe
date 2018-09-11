@@ -20,9 +20,17 @@ class MainMenuScene extends Phaser.Scene {
         /* Player icons */
         this.crossIcon = this.add.sprite(T3.game.config.width / 4 + 50, T3.game.config.height / 2, "cross", 0);
         this.crossIcon.setOrigin(0.5, 0);
+        this.crossIcon.setInteractive();
+        this.crossIcon.on('pointerdown', function () {
+            this.startGame();
+        }, this);
 
         this.circleIcon = this.add.sprite((T3.game.config.width / 4) * 3 - 50, T3.game.config.height / 2, "circle", 0);
         this.circleIcon.setOrigin(0.5, 0);
+        this.circleIcon.setInteractive();
+        this.circleIcon.on('pointerdown', function () {
+            this.startGame();
+        }, this);
 
         /* Choose player text */
         this.choosePlayerText = this.add.image(T3.game.config.width / 2, (T3.game.config.height / 4) * 3, "chooseplayer");
@@ -81,5 +89,9 @@ class MainMenuScene extends Phaser.Scene {
         };
 
         this.time.addEvent(timerConfig);
+    }
+
+    startGame() {
+        this.scene.start(T3.GameOptions.scenes.gameScene);
     }
 }
