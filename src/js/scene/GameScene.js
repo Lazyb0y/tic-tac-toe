@@ -22,5 +22,9 @@ class GameScene extends Phaser.Scene {
 
         this.restart = this.add.image(T3.game.config.width / 2, T3.game.config.height - 90, "restart");
         this.restart.setOrigin(0.5, 1);
+        this.restart.setInteractive();
+        this.restart.on('pointerdown', function () {
+            this.scene.start(T3.GameOptions.scenes.mainMenuScene);
+        }, this);
     }
 }
