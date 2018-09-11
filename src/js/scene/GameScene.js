@@ -15,6 +15,7 @@ class GameScene extends Phaser.Scene {
         /* Adding UI images */
         this.gameTitle = this.add.image(T3.game.config.width / 2, 90, "gametitle");
         this.gameTitle.setOrigin(0.5, 0);
+        this.gameTitle.alpha = 0;
 
         /* Game board */
         this.board = this.add.sprite(T3.game.config.width / 2, T3.game.config.height / 2, "board", 0);
@@ -24,8 +25,11 @@ class GameScene extends Phaser.Scene {
         this.restart.setOrigin(0.5, 1);
         this.restart.setInteractive();
         this.restart.on('pointerdown', function () {
-            this.scene.start(T3.GameOptions.scenes.mainMenuScene);
+            if (this.allowUserInput) {
+                this.scene.start(T3.GameOptions.scenes.mainMenuScene);
+            }
         }, this);
+        this.restart.alpha = 0;
 
         this.showEntryAnimation();
     }
@@ -49,7 +53,9 @@ class GameScene extends Phaser.Scene {
 
                 this.board.on('animationcomplete', function (animation) {
                     if (animation.key === 'drawBoardAnim') {
-                        console.log('Board animation complete');
+                        this.gameTitle.alpha = 1;
+                        this.restart.alpha = 1;
+                        this.allowUserInput = true;
                     }
                 }, this);
 
