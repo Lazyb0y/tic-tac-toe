@@ -49,6 +49,32 @@ class GameScene extends Phaser.Scene {
         this.boardState.push({used: null, player: null, index: 6, center: {x: null, y: null}});
         this.boardState.push({used: null, player: null, index: 7, center: {x: null, y: null}});
         this.boardState.push({used: null, player: null, index: 8, center: {x: null, y: null}});
+
+        this.calculateBoardCenters();
+    }
+
+    calculateBoardCenters() {
+        let boardBorderWidth = ((this.board.height / 100) * 4.286);
+        let halfCube = Math.round((this.board.height - boardBorderWidth * 2) / 6);
+
+        let top = this.board.getTopLeft().y;
+        let bottom = this.board.getBottomRight().y;
+        let left = this.board.getTopLeft().x;
+        let right = this.board.getBottomRight().x;
+        let center = this.board.getCenter();
+
+        /* Calculation center location */
+        this.boardState[0].center = {x: left + halfCube, y: top + halfCube};
+        this.boardState[1].center = {x: center.x, y: top + halfCube};
+        this.boardState[2].center = {x: right - halfCube, y: top + halfCube};
+
+        this.boardState[3].center = {x: left + halfCube, y: center.y};
+        this.boardState[4].center = {x: center.x, y: center.y};
+        this.boardState[5].center = {x: right - halfCube, y: center.y};
+
+        this.boardState[6].center = {x: left + halfCube, y: bottom - halfCube};
+        this.boardState[7].center = {x: center.x, y: bottom - halfCube};
+        this.boardState[8].center = {x: right - halfCube, y: bottom - halfCube};
     }
 
     showEntryAnimation() {
