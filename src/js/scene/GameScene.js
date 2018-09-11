@@ -119,6 +119,11 @@ class GameScene extends Phaser.Scene {
     handleBoardTap(event) {
         let selectedCube = this.getSelectedCube(event.x, event.y);
         let cube = this.boardState[selectedCube];
+        if (cube.used) {
+            return;
+        }
+        cube.used = true;
+
         let turnCube = this.add.sprite(cube.center.x, cube.center.y, this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube', 5);
         turnCube.setOrigin(0.5, 0.5);
     }
