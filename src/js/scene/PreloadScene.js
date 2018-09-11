@@ -17,7 +17,7 @@ class PreloadScene extends Phaser.Scene {
     }
 
     create() {
-        console.log("Created PreloadScene");
+        this.scene.start(T3.GameOptions.scenes.mainMenuScene);
     }
 
     setupProgressBar() {
