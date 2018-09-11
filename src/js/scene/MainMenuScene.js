@@ -4,6 +4,8 @@ class MainMenuScene extends Phaser.Scene {
     }
 
     init() {
+        this.canPlay = false;
+
         this.gameTitle = null;
 
         this.crossIcon = null;
@@ -79,6 +81,7 @@ class MainMenuScene extends Phaser.Scene {
                     if (animation.key === 'drawCircleAnim') {
                         this.gameTitle.alpha = 1;
                         this.choosePlayerText.alpha = 1;
+                        this.canPlay = true;
                     }
                 }, this);
 
@@ -92,6 +95,9 @@ class MainMenuScene extends Phaser.Scene {
     }
 
     startGame() {
+        if (!this.canPlay) {
+            return;
+        }
         this.scene.start(T3.GameOptions.scenes.gameScene);
     }
 }
