@@ -4,14 +4,18 @@ class MainMenuScene extends Phaser.Scene {
     }
 
     init() {
+        this.gameTitle = null;
+
         this.crossIcon = null;
         this.circleIcon = null;
+        this.choosePlayerText = null;
     }
 
     create() {
         /* Adding UI images */
-        let gameTitle = this.add.image(T3.game.config.width / 2, 90, "gametitle");
-        gameTitle.setOrigin(0.5, 0);
+        this.gameTitle = this.add.image(T3.game.config.width / 2, 90, "gametitle");
+        this.gameTitle.setOrigin(0.5, 0);
+        this.gameTitle.alpha = 0;
 
         /* Player icons */
         this.crossIcon = this.add.sprite(T3.game.config.width / 4 + 50, T3.game.config.height / 2, "cross", 0);
@@ -21,8 +25,9 @@ class MainMenuScene extends Phaser.Scene {
         this.circleIcon.setOrigin(0.5, 0);
 
         /* Choose player text */
-        let choosePlayer = this.add.image(T3.game.config.width / 2, (T3.game.config.height / 4) * 3, "chooseplayer");
-        choosePlayer.setOrigin(0.5, 0);
+        this.choosePlayerText = this.add.image(T3.game.config.width / 2, (T3.game.config.height / 4) * 3, "chooseplayer");
+        this.choosePlayerText.setOrigin(0.5, 0);
+        this.choosePlayerText.alpha = 0;
 
         this.showEntryAnimation();
     }
@@ -54,6 +59,13 @@ class MainMenuScene extends Phaser.Scene {
                 this.crossIcon.on('animationcomplete', function (animation) {
                     if (animation.key === 'drawCrossAnim') {
                         this.circleIcon.anims.play('drawCircleAnim');
+                    }
+                }, this);
+
+                this.circleIcon.on('animationcomplete', function (animation) {
+                    if (animation.key === 'drawCircleAnim') {
+                        this.gameTitle.alpha = 1;
+                        this.choosePlayerText.alpha = 1;
                     }
                 }, this);
 
