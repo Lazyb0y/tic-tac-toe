@@ -13,6 +13,11 @@ T3.GameOptions = {
     }
 };
 
+const PlayerType = {
+    Bot: 0,
+    Human: 1
+};
+
 /* Resizing the game to cover the wider area possible */
 function resizeGame() {
     let canvas = document.querySelector("canvas");
