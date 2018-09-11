@@ -6,6 +6,7 @@ class GameScene extends Phaser.Scene {
     init(data) {
         this.data = data;
 
+        this.firstPlayer = this.data.firstPlayer;
         this.allowUserInput = false;
         this.boardState = null;
 
@@ -117,7 +118,9 @@ class GameScene extends Phaser.Scene {
 
     handleBoardTap(event) {
         let selectedCube = this.getSelectedCube(event.x, event.y);
-        console.log(selectedCube);
+        let cube = this.boardState[selectedCube];
+        let turnCube = this.add.sprite(cube.center.x, cube.center.y, this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube', 5);
+        turnCube.setOrigin(0.5, 0.5);
     }
 
     getSelectedCube(x, y) {
