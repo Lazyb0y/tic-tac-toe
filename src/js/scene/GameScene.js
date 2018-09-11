@@ -3,7 +3,9 @@ class GameScene extends Phaser.Scene {
         super(T3.GameOptions.scenes.gameScene);
     }
 
-    init() {
+    init(data) {
+        this.data = data;
+
         this.allowUserInput = false;
         this.boardState = null;
 

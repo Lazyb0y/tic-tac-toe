@@ -24,14 +24,14 @@ class MainMenuScene extends Phaser.Scene {
         this.crossIcon.setOrigin(0.5, 0);
         this.crossIcon.setInteractive();
         this.crossIcon.on('pointerdown', function () {
-            this.startGame();
+            this.startGame(PlayerType.Human);
         }, this);
 
         this.circleIcon = this.add.sprite((T3.game.config.width / 4) * 3 - 50, T3.game.config.height / 2, "circle", 0);
         this.circleIcon.setOrigin(0.5, 0);
         this.circleIcon.setInteractive();
         this.circleIcon.on('pointerdown', function () {
-            this.startGame();
+            this.startGame(PlayerType.Bot);
         }, this);
 
         /* Choose player text */
@@ -94,10 +94,13 @@ class MainMenuScene extends Phaser.Scene {
         this.time.addEvent(timerConfig);
     }
 
-    startGame() {
+    startGame(firstPlayer) {
         if (!this.allowUserInput) {
             return;
         }
-        this.scene.start(T3.GameOptions.scenes.gameScene);
+
+        this.scene.start(T3.GameOptions.scenes.gameScene, {
+            firstPlayer: firstPlayer
+        });
     }
 }
