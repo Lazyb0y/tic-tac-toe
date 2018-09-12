@@ -17,7 +17,6 @@ class MainMenuScene extends Phaser.Scene {
         /* Adding UI images */
         this.gameTitle = this.add.image(T3.game.config.width / 2, 90, "gametitle");
         this.gameTitle.setOrigin(0.5, 0);
-        this.gameTitle.alpha = 0;
 
         /* Player icons */
         this.crossIcon = this.add.sprite(T3.game.config.width / 4 + 50, T3.game.config.height / 2, "cross", 0);
@@ -79,7 +78,6 @@ class MainMenuScene extends Phaser.Scene {
 
                 this.circleIcon.on('animationcomplete', function (animation) {
                     if (animation.key === 'drawCircleAnim') {
-                        this.gameTitle.alpha = 1;
                         this.choosePlayerText.alpha = 1;
                         this.allowUserInput = true;
                     }
