@@ -189,6 +189,7 @@ class GameScene extends Phaser.Scene {
             return;
         }
         nextEmptyCube.used = true;
+        nextEmptyCube.player = PlayerType.Bot;
 
         let turnCube = this.add.sprite(nextEmptyCube.center.x, nextEmptyCube.center.y, this.firstPlayer === PlayerType.Bot ? 'crossCube' : 'circleCube', 5);
         turnCube.setOrigin(0.5, 0.5);
