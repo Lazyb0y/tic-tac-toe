@@ -184,6 +184,7 @@ class GameScene extends Phaser.Scene {
     botTurn() {
         let nextEmptyCube = this.nextRandomEmptyCube();
         if (!nextEmptyCube) {
+            this.gameEnd();
             return;
         }
         nextEmptyCube.used = true;
@@ -208,5 +209,9 @@ class GameScene extends Phaser.Scene {
             let randomCube = Phaser.Utils.Array.GetRandom(emptyCubes);
             return this.boardState[randomCube];
         }
+    }
+
+    gameEnd() {
+        this.scene.start(T3.GameOptions.scenes.gameEndScene);
     }
 }
