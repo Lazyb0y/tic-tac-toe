@@ -131,18 +131,35 @@ class GameScene extends Phaser.Scene {
         cube.used = true;
         cube.player = PlayerType.Human;
 
-        let turnCube = this.add.sprite(cube.center.x, cube.center.y, this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube', 5);
+        let turnCube = this.add.sprite(cube.center.x, cube.center.y, this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube', 0);
         turnCube.setOrigin(0.5, 0.5);
 
-        /* Checking win status */
-        let winCubes = this.checkWin();
-        if (winCubes) {
-            this.gameEnd();
+        if (!this.anims.get('drawPlayerCube')) {
+            let playerAnimConfig = {
+                key: 'drawPlayerCube',
+                frames: this.anims.generateFrameNumbers(this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube', {
+                    start: 0,
+                    end: 5
+                }),
+                frameRate: 25,
+            };
+            this.anims.create(playerAnimConfig);
         }
-        else {
-            this.currentTurn = PlayerType.Bot;
-            this.botTurn();
-        }
+
+        turnCube.on('animationcomplete', function (animation) {
+            if (animation.key === 'drawPlayerCube') {
+                /* Checking win status */
+                let winCubes = this.checkWin();
+                if (winCubes) {
+                    this.gameEnd();
+                }
+                else {
+                    this.currentTurn = PlayerType.Bot;
+                    this.botTurn();
+                }
+            }
+        }, this);
+        turnCube.anims.play('drawPlayerCube');
     }
 
     getSelectedCube(x, y) {
