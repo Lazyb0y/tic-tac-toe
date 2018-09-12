@@ -128,7 +128,14 @@ class GameScene extends Phaser.Scene {
         let turnCube = this.add.sprite(cube.center.x, cube.center.y, this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube', 5);
         turnCube.setOrigin(0.5, 0.5);
 
-        this.botTurn();
+        /* Checking win status */
+        let winCubes = this.checkWin();
+        if (winCubes) {
+            this.gameEnd();
+        }
+        else {
+            this.botTurn();
+        }
     }
 
     getSelectedCube(x, y) {
