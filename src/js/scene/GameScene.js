@@ -231,18 +231,37 @@ class GameScene extends Phaser.Scene {
         nextEmptyCube.used = true;
         nextEmptyCube.player = PlayerType.Bot;
 
-        let turnCube = this.add.sprite(nextEmptyCube.center.x, nextEmptyCube.center.y, this.firstPlayer === PlayerType.Bot ? 'crossCube' : 'circleCube', 5);
+        let turnCube = this.add.sprite(nextEmptyCube.center.x, nextEmptyCube.center.y, this.firstPlayer === PlayerType.Bot ? 'crossCube' : 'circleCube', 0);
         turnCube.setOrigin(0.5, 0.5);
 
-        /* Checking win status */
-        let winCubes = this.checkWin();
-        if (winCubes) {
-            this.gameEnd();
+        /* Cube draw animation */
+        let animName = 'draw' + (this.firstPlayer === PlayerType.Bot ? 'crossCube' : 'circleCube');
+        if (!this.anims.get(animName)) {
+            let botAnimConfig = {
+                key: animName,
+                frames: this.anims.generateFrameNumbers(this.firstPlayer === PlayerType.Bot ? 'crossCube' : 'circleCube', {
+                    start: 0,
+                    end: 5
+                }),
+                frameRate: 25,
+            };
+            this.anims.create(botAnimConfig);
         }
-        else {
-            this.currentTurn = PlayerType.Human;
-            this.allowUserInput = true;
-        }
+
+        turnCube.on('animationcomplete', function (animation) {
+            if (animation.key === animName) {
+                /* Checking win status */
+                let winCubes = this.checkWin();
+                if (winCubes) {
+                    this.gameEnd();
+                }
+                else {
+                    this.currentTurn = PlayerType.Human;
+                    this.allowUserInput = true;
+                }
+            }
+        }, this);
+        turnCube.anims.play(animName);
     }
 
     nextRandomEmptyCube() {
