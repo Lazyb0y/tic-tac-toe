@@ -32,9 +32,7 @@ class GameScene extends Phaser.Scene {
         this.restart.setOrigin(0.5, 1);
         this.restart.setInteractive();
         this.restart.on('pointerdown', function () {
-            if (this.allowUserInput) {
-                this.scene.start(T3.GameOptions.scenes.mainMenuScene);
-            }
+            this.scene.start(T3.GameOptions.scenes.mainMenuScene);
         }, this);
         this.restart.alpha = 0;
 
