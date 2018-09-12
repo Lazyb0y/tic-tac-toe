@@ -121,9 +121,15 @@ class GameScene extends Phaser.Scene {
     }
 
     handleBoardTap(event) {
+        if (this.allowUserInput !== true) {
+            return;
+        }
+        this.allowUserInput = false;
+
         let selectedCube = this.getSelectedCube(event.x, event.y);
         let cube = this.boardState[selectedCube];
         if (cube.used) {
+            this.allowUserInput = true;
             return;
         }
         cube.used = true;
