@@ -156,7 +156,7 @@ class GameScene extends Phaser.Scene {
                 /* Checking win status */
                 let winCubes = this.checkWin();
                 if (winCubes) {
-                    this.gameEnd();
+                    this.gameEnd(PlayerType.Human);
                 }
                 else {
                     this.time.delayedCall(T3.GameOptions.animations.botCubeDelay, function () {
@@ -223,7 +223,7 @@ class GameScene extends Phaser.Scene {
     botTurn() {
         let nextEmptyCube = this.nextRandomEmptyCube();
         if (!nextEmptyCube) {
-            this.gameEnd();
+            this.gameEnd(null);
             return;
         }
         nextEmptyCube.used = true;
@@ -251,7 +251,7 @@ class GameScene extends Phaser.Scene {
                 /* Checking win status */
                 let winCubes = this.checkWin();
                 if (winCubes) {
-                    this.gameEnd();
+                    this.gameEnd(PlayerType.Bot);
                 }
                 else {
                     this.currentTurn = PlayerType.Human;
@@ -280,8 +280,10 @@ class GameScene extends Phaser.Scene {
         }
     }
 
-    gameEnd() {
-        this.scene.start(T3.GameOptions.scenes.gameEndScene);
+    gameEnd(winner) {
+        this.scene.start(T3.GameOptions.scenes.gameEndScene, {
+            winner: winner
+        });
     }
 
     checkWin() {

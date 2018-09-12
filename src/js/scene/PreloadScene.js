@@ -20,6 +20,9 @@ class PreloadScene extends Phaser.Scene {
         this.load.image("chooseplayer", "assets/sprites/chooseplayer.png");
         this.load.image("restart", "assets/sprites/restart.png");
         this.load.image("playAgain", "assets/sprites/playagain.png");
+        this.load.image('drawText', 'assets/sprites/drawtext.png');
+        this.load.image('looseText', 'assets/sprites/loosetext.png');
+        this.load.image('winText', 'assets/sprites/wintext.png');
 
         this.load.spritesheet("cross", "assets/sprites/crossspritesheet.png", {
             frameWidth: 400,

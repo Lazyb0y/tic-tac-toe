@@ -4,6 +4,7 @@ T3.GameOptions = {
     aspectRatio: 16 / 9,
     animations: {
         botCubeDelay: 1000,
+        alphaTweenSpeed: 1000,
         iconAppearAnimationDelay: 500
     },
     scenes: {
