@@ -137,12 +137,13 @@ class GameScene extends Phaser.Scene {
         cube.used = true;
         cube.player = PlayerType.Human;
 
+        let animName = 'draw' + (this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube');
         let turnCube = this.add.sprite(cube.center.x, cube.center.y, this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube', 0);
         turnCube.setOrigin(0.5, 0.5);
 
-        if (!this.anims.get('drawPlayerCube')) {
+        if (!this.anims.get(animName)) {
             let playerAnimConfig = {
-                key: 'drawPlayerCube',
+                key: animName,
                 frames: this.anims.generateFrameNumbers(this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube', {
                     start: 0,
                     end: 5
@@ -153,7 +154,7 @@ class GameScene extends Phaser.Scene {
         }
 
         turnCube.on('animationcomplete', function (animation) {
-            if (animation.key === 'drawPlayerCube') {
+            if (animation.key === animName) {
                 /* Checking win status */
                 let winCubes = this.checkWin();
                 if (winCubes) {
@@ -167,7 +168,7 @@ class GameScene extends Phaser.Scene {
                 }
             }
         }, this);
-        turnCube.anims.play('drawPlayerCube');
+        turnCube.anims.play(animName);
     }
 
     getSelectedCube(x, y) {
