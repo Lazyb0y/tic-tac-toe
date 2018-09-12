@@ -236,6 +236,7 @@ class GameScene extends Phaser.Scene {
         }
         else {
             this.currentTurn = PlayerType.Human;
+            this.allowUserInput = true;
         }
     }
 
