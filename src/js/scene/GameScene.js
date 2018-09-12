@@ -103,7 +103,9 @@ class GameScene extends Phaser.Scene {
                         this.gameTitle.alpha = 1;
                         this.restart.alpha = 1;
                         if (this.currentTurn === PlayerType.Bot) {
-                            this.botTurn();
+                            this.time.delayedCall(T3.GameOptions.animations.botCubeDelay, function () {
+                                this.botTurn();
+                            }, [], this);
                         }
                         else {
                             this.allowUserInput = true;
@@ -158,8 +160,10 @@ class GameScene extends Phaser.Scene {
                     this.gameEnd();
                 }
                 else {
-                    this.currentTurn = PlayerType.Bot;
-                    this.botTurn();
+                    this.time.delayedCall(T3.GameOptions.animations.botCubeDelay, function () {
+                        this.currentTurn = PlayerType.Bot;
+                        this.botTurn();
+                    }, [], this);
                 }
             }
         }, this);
