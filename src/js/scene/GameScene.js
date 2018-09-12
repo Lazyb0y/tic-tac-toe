@@ -214,4 +214,45 @@ class GameScene extends Phaser.Scene {
     gameEnd() {
         this.scene.start(T3.GameOptions.scenes.gameEndScene);
     }
+
+    checkWin() {
+        /* Checking row wise */
+        if (this.boardState[0].used && this.boardState[0].player === this.boardState[1].player && this.boardState[0].player === this.boardState[2].player) {
+            return [this.boardState[0], this.boardState[1], this.boardState[2]];
+        }
+
+        if (this.boardState[3].used && this.boardState[3].player === this.boardState[4].player && this.boardState[3].player === this.boardState[5].player) {
+            return [this.boardState[3], this.boardState[4], this.boardState[5]];
+        }
+
+        if (this.boardState[6].used && this.boardState[6].player === this.boardState[7].player && this.boardState[6].player === this.boardState[8].player) {
+            return [this.boardState[6], this.boardState[7], this.boardState[8]];
+        }
+
+        /* Checking column wise */
+        if (this.boardState[0].used && this.boardState[0].player === this.boardState[3].player && this.boardState[0].player === this.boardState[6].player) {
+            return [this.boardState[0], this.boardState[3], this.boardState[6]];
+        }
+
+        if (this.boardState[1].used && this.boardState[1].player === this.boardState[4].player && this.boardState[1].player === this.boardState[7].player) {
+            return [this.boardState[1], this.boardState[4], this.boardState[7]];
+        }
+
+        if (this.boardState[2].used && this.boardState[2].player === this.boardState[5].player && this.boardState[2].player === this.boardState[8].player) {
+            return [this.boardState[2], this.boardState[5], this.boardState[8]];
+        }
+
+        /* Checking diagonals */
+        if (this.boardState[4].used) {
+            if (this.boardState[4].player === this.boardState[0].player && this.boardState[4].player === this.boardState[8].player) {
+                return [this.boardState[0], this.boardState[4], this.boardState[8]];
+            }
+
+            if (this.boardState[4].player === this.boardState[2].player && this.boardState[4].player === this.boardState[6].player) {
+                return [this.boardState[2], this.boardState[4], this.boardState[6]];
+            }
+        }
+
+        return null;
+    }
 }
