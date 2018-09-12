@@ -7,6 +7,7 @@ class GameScene extends Phaser.Scene {
         this.data = data;
 
         this.firstPlayer = this.data.firstPlayer;
+        this.currentTurn = this.firstPlayer;
         this.allowUserInput = false;
         this.boardState = null;
 
@@ -103,7 +104,12 @@ class GameScene extends Phaser.Scene {
                     if (animation.key === 'drawBoardAnim') {
                         this.gameTitle.alpha = 1;
                         this.restart.alpha = 1;
-                        this.allowUserInput = true;
+                        if (this.currentTurn === PlayerType.Bot) {
+                            this.botTurn();
+                        }
+                        else {
+                            this.allowUserInput = true;
+                        }
                     }
                 }, this);
 
@@ -134,6 +140,7 @@ class GameScene extends Phaser.Scene {
             this.gameEnd();
         }
         else {
+            this.currentTurn = PlayerType.Bot;
             this.botTurn();
         }
     }
@@ -207,7 +214,7 @@ class GameScene extends Phaser.Scene {
             this.gameEnd();
         }
         else {
-            console.log('Its Human turn.');
+            this.currentTurn = PlayerType.Human;
         }
     }
 
