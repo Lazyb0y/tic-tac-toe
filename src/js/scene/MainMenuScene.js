@@ -70,18 +70,8 @@ class MainMenuScene extends Phaser.Scene {
                     this.anims.create(circleAnimConfig);
                 }
 
-                this.crossIcon.on('animationcomplete', function (animation) {
-                    if (animation.key === 'drawCrossAnim') {
-                        this.circleIcon.anims.play('drawCircleAnim');
-                    }
-                }, this);
-
-                this.circleIcon.on('animationcomplete', function (animation) {
-                    if (animation.key === 'drawCircleAnim') {
-                        this.choosePlayerText.alpha = 1;
-                        this.allowUserInput = true;
-                    }
-                }, this);
+                this.crossIcon.on('animationcomplete', this.onCrossAnimationComplete, this);
+                this.circleIcon.on('animationcomplete', this.onCircleAnimationComplete, this);
 
                 this.crossIcon.anims.play('drawCrossAnim');
             },
@@ -90,6 +80,19 @@ class MainMenuScene extends Phaser.Scene {
         };
 
         this.time.addEvent(timerConfig);
+    }
+
+    onCrossAnimationComplete(animation) {
+        if (animation.key === 'drawCrossAnim') {
+            this.circleIcon.anims.play('drawCircleAnim');
+        }
+    }
+
+    onCircleAnimationComplete(animation) {
+        if (animation.key === 'drawCircleAnim') {
+            this.choosePlayerText.alpha = 1;
+            this.allowUserInput = true;
+        }
     }
 
     startGame(firstPlayer) {
