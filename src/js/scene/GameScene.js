@@ -123,6 +123,7 @@ class GameScene extends Phaser.Scene {
             return;
         }
         cube.used = true;
+        cube.player = PlayerType.Human;
 
         let turnCube = this.add.sprite(cube.center.x, cube.center.y, this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube', 5);
         turnCube.setOrigin(0.5, 0.5);
