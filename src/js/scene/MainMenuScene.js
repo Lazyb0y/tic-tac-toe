@@ -17,7 +17,7 @@ class MainMenuScene extends Phaser.Scene {
 
         this.difficultyText = null;
         this.arrowLeft = null;
-        this.arrowRight = null
+        this.arrowRight = null;
 
         this.previousClientWidth = 0;
         this.previousClientHeight = 0;
