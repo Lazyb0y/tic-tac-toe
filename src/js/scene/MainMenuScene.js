@@ -95,7 +95,8 @@ class MainMenuScene extends Phaser.Scene {
             }
             else {
                 this.scene.start(T3.GameOptions.scenes.gameScene, {
-                    firstPlayer: this.firstPlayer
+                    firstPlayer: this.firstPlayer,
+                    difficulty: this.selectedDifficulty
                 });
             }
         }
