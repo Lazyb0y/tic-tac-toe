@@ -27,6 +27,12 @@ class PreloadScene extends Phaser.Scene {
         this.load.image("egg", "assets/sprites/egg.png");
         this.load.image("robotFace", "assets/sprites/robotface.png");
 
+        this.load.image("difficultyEasy", "assets/sprites/difficultyeasy.png");
+        this.load.image("difficultyHard", "assets/sprites/difficultyhard.png");
+        this.load.image("difficultyMedium", "assets/sprites/difficultymedium.png");
+        this.load.image("arrowLeft", "assets/sprites/arrow_left.png");
+        this.load.image("arrowRight", "assets/sprites/arrow_right.png");
+
         this.load.spritesheet("cross", "assets/sprites/crossspritesheet.png", {
             frameWidth: 400,
             frameHeight: 400

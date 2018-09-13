@@ -13,12 +13,29 @@ class MainMenuScene extends Phaser.Scene {
         this.crossIcon = null;
         this.circleIcon = null;
         this.choosePlayerText = null;
+
+        this.difficultyText = null;
+        this.arrowLeft = null;
+        this.arrowRight = null
     }
 
     create() {
         /* Adding UI images */
         this.gameTitle = this.add.image(T3.game.config.width / 2, 90, "gametitle");
         this.gameTitle.setOrigin(0.5, 0);
+
+        /* Game difficulty */
+        this.difficultyText = this.add.image(T3.game.config.width / 2, (T3.game.config.height / 4) * 1.5, "difficultyMedium");
+        this.difficultyText.setOrigin(0.5, 0.5);
+        this.difficultyText.alpha = 0;
+
+        this.arrowLeft = this.add.image(110, (T3.game.config.height / 4) * 1.5, "arrowLeft");
+        this.arrowLeft.setOrigin(0.5, 0.5);
+        this.arrowLeft.alpha = 0;
+
+        this.arrowRight = this.add.image(T3.game.config.width - 110, (T3.game.config.height / 4) * 1.5, "arrowRight");
+        this.arrowRight.setOrigin(0.5, 0.5);
+        this.arrowRight.alpha = 0;
 
         /* Player icons */
         this.crossIcon = this.add.sprite(T3.game.config.width / 4 + 50, T3.game.config.height / 2, "cross", 0);
@@ -78,6 +95,9 @@ class MainMenuScene extends Phaser.Scene {
         if (animation.key === T3.GameOptions.animations.keys.drawCircle) {
             if (!this.isPlayingReverse) {
                 this.choosePlayerText.alpha = 1;
+                this.difficultyText.alpha = 1;
+                this.arrowLeft.alpha = 1;
+                this.arrowRight.alpha = 1;
                 this.allowUserInput = true;
             }
             else {
