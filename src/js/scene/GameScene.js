@@ -13,6 +13,7 @@ class GameScene extends Phaser.Scene {
         this.isPlayingReverse = false;
         this.boardState = null;
         this.winner = null;
+        this.isRestarting = false;
 
         this.gameTitle = null;
         this.restart = null;
@@ -38,9 +39,7 @@ class GameScene extends Phaser.Scene {
         this.restart = this.add.image(T3.game.config.width / 2, T3.game.config.height + 90, "restart");
         this.restart.setOrigin(0.5, 1);
         this.restart.setInteractive();
-        this.restart.on('pointerdown', function () {
-            this.scene.start(T3.GameOptions.scenes.mainMenuScene);
-        }, this);
+        this.restart.on('pointerdown', this.goToMainMenu, this);
 
         /* Initializing sounds */
         this.playerSound = this.sound.add("playerSound");
@@ -146,9 +145,14 @@ class GameScene extends Phaser.Scene {
                             duration: T3.GameOptions.animations.buttonTweenDelay,
                             callbackScope: this,
                             onComplete: function () {
-                                this.scene.start(T3.GameOptions.scenes.gameEndScene, {
-                                    winner: this.winner
-                                });
+                                if (this.isRestarting) {
+                                    this.scene.start(T3.GameOptions.scenes.mainMenuScene);
+                                }
+                                else {
+                                    this.scene.start(T3.GameOptions.scenes.gameEndScene, {
+                                        winner: this.winner
+                                    });
+                                }
                             }
                         });
                     }
@@ -402,5 +406,10 @@ class GameScene extends Phaser.Scene {
         }
 
         return null;
+    }
+
+    goToMainMenu() {
+        this.isRestarting = true;
+        this.gameEnd(null);
     }
 }
