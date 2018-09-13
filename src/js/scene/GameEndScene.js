@@ -8,6 +8,7 @@ class GameEndScene extends Phaser.Scene {
 
         this.playAgain = null;
         this.resultText = null;
+        this.winnerSymbol = null;
     }
 
     create() {
@@ -18,27 +19,34 @@ class GameEndScene extends Phaser.Scene {
         this.resultText.setOrigin(0.5, 1);
         this.resultText.alpha = 0;
 
+        this.winnerSymbol = this.add.image(T3.game.config.width / 2, T3.game.config.height / 2, "egg");
+        this.winnerSymbol.setOrigin(0.5, 0);
+        this.winnerSymbol.alpha = 0;
+
         this.playAgain = this.add.image(T3.game.config.width / 2, T3.game.config.height - 90, "playAgain");
         this.playAgain.setOrigin(0.5, 1);
         this.playAgain.setInteractive();
         this.playAgain.on('pointerdown', this.loadGameMenuScene, this);
 
-        this.showResultText();
+        this.showResult();
     }
 
-    showResultText() {
+    showResult() {
         if (this.winner === PlayerType.Human) {
             this.resultText.setTexture('winText');
+            this.winnerSymbol.setTexture('cup');
         }
         else if (this.winner === PlayerType.Bot) {
             this.resultText.setTexture('looseText');
+            this.winnerSymbol.setTexture('looser');
         }
         else {
             this.resultText.setTexture('drawText');
+            this.winnerSymbol.setTexture('egg');
         }
 
         this.tweens.add({
-            targets: [this.resultText],
+            targets: [this.resultText, this.winnerSymbol],
             alpha: 1,
             duration: T3.GameOptions.animations.alphaTweenSpeed
         });
