@@ -213,8 +213,13 @@ class GameScene extends Phaser.Scene {
                     this.gameEnd(PlayerType.Bot);
                 }
                 else {
-                    this.currentTurn = PlayerType.Human;
-                    this.allowUserInput = true;
+                    if (!this.nextRandomEmptyCube()) {
+                        this.gameEnd(null);
+                    }
+                    else {
+                        this.currentTurn = PlayerType.Human;
+                        this.allowUserInput = true;
+                    }
                 }
             }
         }, this);
