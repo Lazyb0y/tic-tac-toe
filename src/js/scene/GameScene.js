@@ -7,6 +7,7 @@ class GameScene extends Phaser.Scene {
         this.data = data;
 
         this.firstPlayer = this.data.firstPlayer;
+        this.difficulty = this.data.difficulty;
         this.currentTurn = this.firstPlayer;
         this.allowUserInput = false;
         this.boardState = null;
@@ -194,7 +195,23 @@ class GameScene extends Phaser.Scene {
     }
 
     botTurn() {
-        let nextEmptyCube = this.nextRandomEmptyCube();
+        let nextEmptyCube = null;
+        if (this.difficulty === DifficultyLevel.Easy) {
+            nextEmptyCube = this.nextRandomEmptyCube();
+        }
+        else if (this.difficulty === DifficultyLevel.Medium) {
+            let rand = Math.random() * 100;
+            if (rand < 50) {
+                nextEmptyCube = this.nextRandomEmptyCube();
+            }
+            else {
+                nextEmptyCube = this.nextMoveAi();
+            }
+        }
+        else if (this.difficulty === DifficultyLevel.Hard) {
+            nextEmptyCube = this.nextMoveAi();
+        }
+
         if (!nextEmptyCube) {
             this.gameEnd(null);
             return;
@@ -242,6 +259,34 @@ class GameScene extends Phaser.Scene {
             let randomCube = Phaser.Utils.Array.GetRandom(emptyCubes);
             return this.boardState[randomCube];
         }
+    }
+
+    nextMoveAi() {
+        /* Converting board to array */
+        let huPlayer = "O";
+        let aiPlayer = "X";
+
+        let originalBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        for (let i = 0; i < this.boardState.length; i++) {
+            let cube = this.boardState[i];
+            if (cube.player === PlayerType.Human) {
+                originalBoard[i] = huPlayer;
+            }
+            else if (cube.player === PlayerType.Bot) {
+                originalBoard[i] = aiPlayer;
+            }
+        }
+
+        /* Finding the ultimate play on the game that favors the computer */
+        let tEngine = T(originalBoard, aiPlayer, huPlayer);
+        let bestSpot = tEngine.nextMove();
+
+        /* Converting output to supported result */
+        if (!bestSpot || bestSpot.index === undefined || bestSpot.index == null) {
+            return null;
+        }
+
+        return this.boardState[bestSpot.index];
     }
 
     gameEnd(winner) {
