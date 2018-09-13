@@ -4,7 +4,9 @@ T3.GameOptions = {
     aspectRatio: 16 / 9,
     animations: {
         keys: {
-            drawBoard: 'drawBoard'
+            drawBoard: 'drawBoard',
+            drawCross: 'drawCross',
+            drawCircle: 'drawCircle'
         },
         botCubeDelay: 1000,
         alphaTweenSpeed: 1000,

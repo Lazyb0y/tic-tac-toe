@@ -49,35 +49,10 @@ class MainMenuScene extends Phaser.Scene {
         let timerConfig = {
             delay: T3.GameOptions.animations.iconAppearAnimationDelay,
             callback: function () {
-
-                if (!this.anims.get('drawCrossAnim')) {
-                    let crossAnimConfig = {
-                        key: 'drawCrossAnim',
-                        frames: this.anims.generateFrameNumbers('cross', {
-                            start: 0,
-                            end: 5
-                        }),
-                        frameRate: 25,
-                    };
-                    this.anims.create(crossAnimConfig);
-                }
-
-                if (!this.anims.get('drawCircleAnim')) {
-                    let circleAnimConfig = {
-                        key: 'drawCircleAnim',
-                        frames: this.anims.generateFrameNumbers('circle', {
-                            start: 0,
-                            end: 5
-                        }),
-                        frameRate: 25,
-                    };
-                    this.anims.create(circleAnimConfig);
-                }
-
                 this.crossIcon.on('animationcomplete', this.onCrossAnimationComplete, this);
                 this.circleIcon.on('animationcomplete', this.onCircleAnimationComplete, this);
 
-                this.crossIcon.anims.play('drawCrossAnim');
+                this.crossIcon.anims.play(T3.GameOptions.animations.keys.drawCross);
             },
             callbackScope: this,
             paused: false
@@ -87,9 +62,9 @@ class MainMenuScene extends Phaser.Scene {
     }
 
     onCrossAnimationComplete(animation) {
-        if (animation.key === 'drawCrossAnim') {
+        if (animation.key === T3.GameOptions.animations.keys.drawCross) {
             if (!this.isPlayingReverse) {
-                this.circleIcon.anims.play('drawCircleAnim');
+                this.circleIcon.anims.play(T3.GameOptions.animations.keys.drawCircle);
             }
             else {
                 this.scene.start(T3.GameOptions.scenes.gameScene, {
@@ -100,13 +75,13 @@ class MainMenuScene extends Phaser.Scene {
     }
 
     onCircleAnimationComplete(animation) {
-        if (animation.key === 'drawCircleAnim') {
+        if (animation.key === T3.GameOptions.animations.keys.drawCircle) {
             if (!this.isPlayingReverse) {
                 this.choosePlayerText.alpha = 1;
                 this.allowUserInput = true;
             }
             else {
-                this.crossIcon.anims.playReverse('drawCrossAnim');
+                this.crossIcon.anims.playReverse(T3.GameOptions.animations.keys.drawCross);
             }
         }
     }
@@ -121,7 +96,7 @@ class MainMenuScene extends Phaser.Scene {
             delay: T3.GameOptions.animations.iconAppearAnimationDelay,
             callback: function () {
                 this.isPlayingReverse = true;
-                this.circleIcon.anims.playReverse('drawCircleAnim');
+                this.circleIcon.anims.playReverse(T3.GameOptions.animations.keys.drawCircle);
             },
             callbackScope: this,
             paused: false

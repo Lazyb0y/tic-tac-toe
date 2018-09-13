@@ -51,6 +51,8 @@ class PreloadScene extends Phaser.Scene {
 
         /* Animation data */
         this.load.animation('boardAnimations', 'assets/animations/board.json');
+        this.load.animation('crossAnimations', 'assets/animations/cross.json');
+        this.load.animation('circleAnimations', 'assets/animations/circle.json');
     }
 
     create() {
