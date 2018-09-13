@@ -9,6 +9,11 @@ class GameEndScene extends Phaser.Scene {
         this.playAgain = null;
         this.resultText = null;
         this.winnerSymbol = null;
+
+        this.previousClientWidth = 0;
+        this.previousClientHeight = 0;
+
+        this.isPortraitMode = true;
     }
 
     create() {
@@ -29,6 +34,29 @@ class GameEndScene extends Phaser.Scene {
         this.playAgain.on('pointerdown', this.loadGameMenuScene, this);
 
         this.showResult();
+    }
+
+    update() {
+        if (this.sys.game.device.os.android || this.sys.game.device.os.iPhone || this.sys.game.device.os.iPad) {
+            let clientWidth = document.documentElement.clientWidth;
+            let clientHeight = document.documentElement.clientHeight;
+            if (clientWidth !== this.previousClientWidth || clientHeight !== this.previousClientHeight) {
+                this.previousClientWidth = clientWidth;
+                this.previousClientHeight = clientHeight;
+                this.handleScreenSizeChange();
+            }
+        }
+    }
+
+    handleScreenSizeChange() {
+        if (this.previousClientWidth > this.previousClientHeight) {
+            this.isPortraitMode = false;
+            document.getElementById("turn").style.display = "block";
+        }
+        else {
+            this.isPortraitMode = true;
+            document.getElementById("turn").style.display = "none";
+        }
     }
 
     showResult() {
