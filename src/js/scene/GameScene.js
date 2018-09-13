@@ -10,7 +10,9 @@ class GameScene extends Phaser.Scene {
         this.difficulty = this.data.difficulty;
         this.currentTurn = this.firstPlayer;
         this.allowUserInput = false;
+        this.isPlayingReverse = false;
         this.boardState = null;
+        this.winner = null;
 
         this.gameTitle = null;
         this.restart = null;
@@ -90,18 +92,26 @@ class GameScene extends Phaser.Scene {
             delay: T3.GameOptions.animations.iconAppearAnimationDelay,
             callback: function () {
                 this.board.on('animationcomplete', function (animation) {
-                    if (animation.key === T3.GameOptions.animations.keys.drawBoard) {
-                        this.restart.alpha = 1;
-                        if (this.currentTurn === PlayerType.Bot) {
-                            this.time.delayedCall(T3.GameOptions.animations.botCubeDelay, function () {
-                                this.botTurn();
-                            }, [], this);
-                        }
-                        else {
-                            this.allowUserInput = true;
+                    if (!this.isPlayingReverse) {
+                        if (animation.key === T3.GameOptions.animations.keys.drawBoard) {
+                            this.restart.alpha = 1;
+                            if (this.currentTurn === PlayerType.Bot) {
+                                this.time.delayedCall(T3.GameOptions.animations.botCubeDelay, function () {
+                                    this.botTurn();
+                                }, [], this);
+                            }
+                            else {
+                                this.allowUserInput = true;
+                            }
                         }
                     }
+                    else {
+                        this.scene.start(T3.GameOptions.scenes.gameEndScene, {
+                            winner: this.winner
+                        });
+                    }
                 }, this);
+                this.isPlayingReverse = false;
                 this.board.anims.play(T3.GameOptions.animations.keys.drawBoard);
             },
             callbackScope: this,
@@ -296,9 +306,19 @@ class GameScene extends Phaser.Scene {
     }
 
     gameEnd(winner) {
-        this.scene.start(T3.GameOptions.scenes.gameEndScene, {
-            winner: winner
-        });
+        this.winner = winner;
+        this.isPlayingReverse = true;
+
+        let timerConfig = {
+            delay: T3.GameOptions.animations.iconAppearAnimationDelay,
+            callback: function () {
+                this.board.anims.playReverse(T3.GameOptions.animations.keys.drawBoard);
+            },
+            callbackScope: this,
+            paused: false
+        };
+
+        this.time.addEvent(timerConfig);
     }
 
     checkWin() {
