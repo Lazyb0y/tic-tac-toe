@@ -73,21 +73,7 @@ class MainMenuScene extends Phaser.Scene {
         this.choosePlayerText.setOrigin(0.5, 0);
 
         /* Loading game difficulty*/
-        switch (Number(localStorage.getItem(T3.GameOptions.storage.difficulty))) {
-            case DifficultyLevel.Easy:
-                this.selectedDifficulty = DifficultyLevel.Easy;
-                break;
-            case DifficultyLevel.Medium:
-                this.selectedDifficulty = DifficultyLevel.Medium;
-                break;
-            case DifficultyLevel.Hard:
-                this.selectedDifficulty = DifficultyLevel.Hard;
-                break;
-            default:
-                this.selectedDifficulty = DifficultyLevel.Medium;
-                break;
-        }
-        this.setDifficulty(this.selectedDifficulty);
+        this.loadGameDifficulty();
 
         this.showEntryAnimation();
     }
@@ -247,5 +233,23 @@ class MainMenuScene extends Phaser.Scene {
                 this.arrowRight.visible = false;
                 break;
         }
+    }
+
+    loadGameDifficulty() {
+        switch (Number(localStorage.getItem(T3.GameOptions.storage.difficulty))) {
+            case DifficultyLevel.Easy:
+                this.selectedDifficulty = DifficultyLevel.Easy;
+                break;
+            case DifficultyLevel.Medium:
+                this.selectedDifficulty = DifficultyLevel.Medium;
+                break;
+            case DifficultyLevel.Hard:
+                this.selectedDifficulty = DifficultyLevel.Hard;
+                break;
+            default:
+                this.selectedDifficulty = DifficultyLevel.Medium;
+                break;
+        }
+        this.setDifficulty(this.selectedDifficulty);
     }
 }
