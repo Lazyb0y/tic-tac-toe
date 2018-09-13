@@ -64,9 +64,8 @@ class MainMenuScene extends Phaser.Scene {
         }, this);
 
         /* Choose player text */
-        this.choosePlayerText = this.add.image(T3.game.config.width / 2, (T3.game.config.height / 4) * 3, "chooseplayer");
+        this.choosePlayerText = this.add.image(T3.game.config.width / 2, T3.game.config.height + 90, "chooseplayer");
         this.choosePlayerText.setOrigin(0.5, 0);
-        this.choosePlayerText.alpha = 0;
 
         /* Loading game difficulty*/
         switch (Number(localStorage.getItem(T3.GameOptions.storage.difficulty))) {
@@ -110,9 +109,17 @@ class MainMenuScene extends Phaser.Scene {
                 this.circleIcon.anims.play(T3.GameOptions.animations.keys.drawCircle);
             }
             else {
-                this.scene.start(T3.GameOptions.scenes.gameScene, {
-                    firstPlayer: this.firstPlayer,
-                    difficulty: this.selectedDifficulty
+                this.tweens.add({
+                    targets: [this.choosePlayerText],
+                    y: T3.game.config.height + 90,
+                    duration: T3.GameOptions.animations.buttonTweenDelay,
+                    callbackScope: this,
+                    onComplete: function () {
+                        this.scene.start(T3.GameOptions.scenes.gameScene, {
+                            firstPlayer: this.firstPlayer,
+                            difficulty: this.selectedDifficulty
+                        });
+                    }
                 });
             }
         }
@@ -121,11 +128,18 @@ class MainMenuScene extends Phaser.Scene {
     onCircleAnimationComplete(animation) {
         if (animation.key === T3.GameOptions.animations.keys.drawCircle) {
             if (!this.isPlayingReverse) {
-                this.choosePlayerText.alpha = 1;
-                this.difficultyText.alpha = 1;
-                this.arrowLeft.alpha = 1;
-                this.arrowRight.alpha = 1;
-                this.allowUserInput = true;
+                this.tweens.add({
+                    targets: [this.choosePlayerText],
+                    y: (T3.game.config.height / 4) * 3,
+                    duration: T3.GameOptions.animations.buttonTweenDelay,
+                    callbackScope: this,
+                    onComplete: function () {
+                        this.difficultyText.alpha = 1;
+                        this.arrowLeft.alpha = 1;
+                        this.arrowRight.alpha = 1;
+                        this.allowUserInput = true;
+                    }
+                });
             }
             else {
                 this.crossIcon.anims.playReverse(T3.GameOptions.animations.keys.drawCross);

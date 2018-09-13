@@ -12,7 +12,8 @@ T3.GameOptions = {
         },
         botCubeDelay: 1000,
         alphaTweenSpeed: 1000,
-        iconAppearAnimationDelay: 500
+        iconAppearAnimationDelay: 500,
+        buttonTweenDelay: 500
     },
     storage: {
         difficulty: "t3difficultyLevel"
