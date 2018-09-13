@@ -121,22 +121,9 @@ class GameScene extends Phaser.Scene {
         cube.used = true;
         cube.player = PlayerType.Human;
 
-        let animName = 'draw' + (this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube');
+        let animName = this.firstPlayer === PlayerType.Human ? T3.GameOptions.animations.keys.drawCrossCube : T3.GameOptions.animations.keys.drawCircleCube;
         let turnCube = this.add.sprite(cube.center.x, cube.center.y, this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube', 0);
         turnCube.setOrigin(0.5, 0.5);
-
-        if (!this.anims.get(animName)) {
-            let playerAnimConfig = {
-                key: animName,
-                frames: this.anims.generateFrameNumbers(this.firstPlayer === PlayerType.Human ? 'crossCube' : 'circleCube', {
-                    start: 0,
-                    end: 5
-                }),
-                frameRate: 25,
-            };
-            this.anims.create(playerAnimConfig);
-        }
-
         turnCube.on('animationcomplete', function (animation) {
             if (animation.key === animName) {
                 /* Checking win status */
@@ -215,23 +202,9 @@ class GameScene extends Phaser.Scene {
         nextEmptyCube.used = true;
         nextEmptyCube.player = PlayerType.Bot;
 
+        let animName = this.firstPlayer === PlayerType.Bot ? T3.GameOptions.animations.keys.drawCrossCube : T3.GameOptions.animations.keys.drawCircleCube;
         let turnCube = this.add.sprite(nextEmptyCube.center.x, nextEmptyCube.center.y, this.firstPlayer === PlayerType.Bot ? 'crossCube' : 'circleCube', 0);
         turnCube.setOrigin(0.5, 0.5);
-
-        /* Cube draw animation */
-        let animName = 'draw' + (this.firstPlayer === PlayerType.Bot ? 'crossCube' : 'circleCube');
-        if (!this.anims.get(animName)) {
-            let botAnimConfig = {
-                key: animName,
-                frames: this.anims.generateFrameNumbers(this.firstPlayer === PlayerType.Bot ? 'crossCube' : 'circleCube', {
-                    start: 0,
-                    end: 5
-                }),
-                frameRate: 25,
-            };
-            this.anims.create(botAnimConfig);
-        }
-
         turnCube.on('animationcomplete', function (animation) {
             if (animation.key === animName) {
                 /* Checking win status */

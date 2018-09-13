@@ -6,7 +6,9 @@ T3.GameOptions = {
         keys: {
             drawBoard: 'drawBoard',
             drawCross: 'drawCross',
-            drawCircle: 'drawCircle'
+            drawCircle: 'drawCircle',
+            drawCrossCube: 'drawCrossCube',
+            drawCircleCube: 'drawCircleCube'
         },
         botCubeDelay: 1000,
         alphaTweenSpeed: 1000,
