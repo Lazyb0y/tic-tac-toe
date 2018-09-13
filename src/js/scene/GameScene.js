@@ -35,13 +35,12 @@ class GameScene extends Phaser.Scene {
         this.board.setInteractive();
         this.board.on('pointerdown', this.handleBoardTap, this);
 
-        this.restart = this.add.image(T3.game.config.width / 2, T3.game.config.height - 90, "restart");
+        this.restart = this.add.image(T3.game.config.width / 2, T3.game.config.height + 90, "restart");
         this.restart.setOrigin(0.5, 1);
         this.restart.setInteractive();
         this.restart.on('pointerdown', function () {
             this.scene.start(T3.GameOptions.scenes.mainMenuScene);
         }, this);
-        this.restart.alpha = 0;
 
         /* Initializing sounds */
         this.playerSound = this.sound.add("playerSound");
@@ -122,20 +121,35 @@ class GameScene extends Phaser.Scene {
                 this.board.on('animationcomplete', function (animation) {
                     if (!this.isPlayingReverse) {
                         if (animation.key === T3.GameOptions.animations.keys.drawBoard) {
-                            this.restart.alpha = 1;
-                            if (this.currentTurn === PlayerType.Bot) {
-                                this.time.delayedCall(T3.GameOptions.animations.botCubeDelay, function () {
-                                    this.botTurn();
-                                }, [], this);
-                            }
-                            else {
-                                this.allowUserInput = true;
-                            }
+                            this.tweens.add({
+                                targets: [this.restart],
+                                y: T3.game.config.height - 90,
+                                duration: T3.GameOptions.animations.buttonTweenDelay,
+                                callbackScope: this,
+                                onComplete: function () {
+                                    if (this.currentTurn === PlayerType.Bot) {
+                                        this.time.delayedCall(T3.GameOptions.animations.botCubeDelay, function () {
+                                            this.botTurn();
+                                        }, [], this);
+                                    }
+                                    else {
+                                        this.allowUserInput = true;
+                                    }
+                                }
+                            });
                         }
                     }
                     else {
-                        this.scene.start(T3.GameOptions.scenes.gameEndScene, {
-                            winner: this.winner
+                        this.tweens.add({
+                            targets: [this.restart],
+                            y: T3.game.config.height + 90,
+                            duration: T3.GameOptions.animations.buttonTweenDelay,
+                            callbackScope: this,
+                            onComplete: function () {
+                                this.scene.start(T3.GameOptions.scenes.gameEndScene, {
+                                    winner: this.winner
+                                });
+                            }
                         });
                     }
                 }, this);
