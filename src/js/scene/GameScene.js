@@ -84,21 +84,8 @@ class GameScene extends Phaser.Scene {
         let timerConfig = {
             delay: T3.GameOptions.animations.iconAppearAnimationDelay,
             callback: function () {
-
-                if (!this.anims.get('drawBoardAnim')) {
-                    let boardAnimConfig = {
-                        key: 'drawBoardAnim',
-                        frames: this.anims.generateFrameNumbers('board', {
-                            start: 0,
-                            end: 12
-                        }),
-                        frameRate: 25,
-                    };
-                    this.anims.create(boardAnimConfig);
-                }
-
                 this.board.on('animationcomplete', function (animation) {
-                    if (animation.key === 'drawBoardAnim') {
+                    if (animation.key === T3.GameOptions.animations.keys.drawBoard) {
                         this.restart.alpha = 1;
                         if (this.currentTurn === PlayerType.Bot) {
                             this.time.delayedCall(T3.GameOptions.animations.botCubeDelay, function () {
@@ -110,8 +97,7 @@ class GameScene extends Phaser.Scene {
                         }
                     }
                 }, this);
-
-                this.board.anims.play('drawBoardAnim');
+                this.board.anims.play(T3.GameOptions.animations.keys.drawBoard);
             },
             callbackScope: this,
             paused: false

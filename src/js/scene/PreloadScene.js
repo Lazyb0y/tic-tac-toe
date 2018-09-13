@@ -48,6 +48,9 @@ class PreloadScene extends Phaser.Scene {
             frameWidth: 900,
             frameHeight: 900
         });
+
+        /* Animation data */
+        this.load.animation('boardAnimations', 'assets/animations/board.json');
     }
 
     create() {

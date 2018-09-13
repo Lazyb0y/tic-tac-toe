@@ -3,6 +3,9 @@ var T3 = T3 || {};
 T3.GameOptions = {
     aspectRatio: 16 / 9,
     animations: {
+        keys: {
+            drawBoard: 'drawBoard'
+        },
         botCubeDelay: 1000,
         alphaTweenSpeed: 1000,
         iconAppearAnimationDelay: 500
