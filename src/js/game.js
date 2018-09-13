@@ -14,6 +14,9 @@ T3.GameOptions = {
         alphaTweenSpeed: 1000,
         iconAppearAnimationDelay: 500
     },
+    storage: {
+        difficulty: "t3difficultyLevel"
+    },
     scenes: {
         bootScene: "BootScene",
         preloadScene: "PreloadScene",
