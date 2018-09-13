@@ -7,6 +7,7 @@ class MainMenuScene extends Phaser.Scene {
         this.allowUserInput = false;
         this.isPlayingReverse = false;
         this.firstPlayer = null;
+        this.selectedDifficulty = DifficultyLevel.Medium;
 
         this.gameTitle = null;
 
@@ -31,10 +32,18 @@ class MainMenuScene extends Phaser.Scene {
 
         this.arrowLeft = this.add.image(110, (T3.game.config.height / 4) * 1.5, "arrowLeft");
         this.arrowLeft.setOrigin(0.5, 0.5);
+        this.arrowLeft.setInteractive();
+        this.arrowLeft.on('pointerdown', function () {
+            this.switchDifficulty(-1);
+        }, this);
         this.arrowLeft.alpha = 0;
 
         this.arrowRight = this.add.image(T3.game.config.width - 110, (T3.game.config.height / 4) * 1.5, "arrowRight");
         this.arrowRight.setOrigin(0.5, 0.5);
+        this.arrowRight.setInteractive();
+        this.arrowRight.on('pointerdown', function () {
+            this.switchDifficulty(1);
+        }, this);
         this.arrowRight.alpha = 0;
 
         /* Player icons */
@@ -59,6 +68,7 @@ class MainMenuScene extends Phaser.Scene {
         this.choosePlayerText.setOrigin(0.5, 0);
         this.choosePlayerText.alpha = 0;
 
+        this.setDifficulty(this.selectedDifficulty);
         this.showEntryAnimation();
     }
 
@@ -123,5 +133,59 @@ class MainMenuScene extends Phaser.Scene {
         };
 
         this.time.addEvent(timerConfig);
+    }
+
+    switchDifficulty(direction) {
+        if (!this.allowUserInput) {
+            return;
+        }
+
+        switch (this.selectedDifficulty) {
+            case DifficultyLevel.Easy:
+                if (direction > 0) {
+                    this.selectedDifficulty = DifficultyLevel.Medium;
+                }
+                break;
+
+            case DifficultyLevel.Medium:
+                if (direction > 0) {
+                    this.selectedDifficulty = DifficultyLevel.Hard;
+                }
+                else if (direction < 0) {
+                    this.selectedDifficulty = DifficultyLevel.Easy;
+                }
+                break;
+
+            case DifficultyLevel.Hard:
+                if (direction < 0) {
+                    this.selectedDifficulty = DifficultyLevel.Medium;
+                }
+                break;
+        }
+
+        this.setDifficulty(this.selectedDifficulty);
+    }
+
+    setDifficulty(difficulty) {
+        difficulty = difficulty || DifficultyLevel.Medium;
+        this.selectedDifficulty = difficulty;
+
+        switch (this.selectedDifficulty) {
+            case DifficultyLevel.Easy:
+                this.difficultyText.setTexture('difficultyEasy');
+                this.arrowLeft.visible = false;
+                break;
+
+            case DifficultyLevel.Medium:
+                this.difficultyText.setTexture('difficultyMedium');
+                this.arrowLeft.visible = true;
+                this.arrowRight.visible = true;
+                break;
+
+            case DifficultyLevel.Hard:
+                this.difficultyText.setTexture('difficultyHard');
+                this.arrowRight.visible = false;
+                break;
+        }
     }
 }

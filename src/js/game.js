@@ -28,6 +28,12 @@ const PlayerType = {
     Human: 1
 };
 
+const DifficultyLevel = {
+    Easy: 1,
+    Medium: 2,
+    Hard: 3
+};
+
 /* Resizing the game to cover the wider area possible */
 function resizeGame() {
     let canvas = document.querySelector("canvas");
