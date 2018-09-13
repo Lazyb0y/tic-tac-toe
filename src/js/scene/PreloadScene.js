@@ -64,6 +64,10 @@ class PreloadScene extends Phaser.Scene {
         this.load.animation('circleAnimations', 'assets/animations/circle.json');
         this.load.animation('crossCubeAnimations', 'assets/animations/crossCube.json');
         this.load.animation('circleCubeAnimations', 'assets/animations/circleCube.json');
+
+        /* Lading audio files */
+        this.load.audio('playerSound', ['assets/sounds/player.mp3', 'assets/sounds/player.ogg']);
+        this.load.audio('botSound', ['assets/sounds/bot.mp3', 'assets/sounds/bot.ogg']);
     }
 
     create() {

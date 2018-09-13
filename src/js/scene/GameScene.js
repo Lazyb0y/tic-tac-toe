@@ -36,6 +36,10 @@ class GameScene extends Phaser.Scene {
         }, this);
         this.restart.alpha = 0;
 
+        /* Initializing sounds */
+        this.playerSound = this.sound.add("playerSound");
+        this.botSound = this.sound.add("botSound");
+
         this.initBoard();
         this.showEntryAnimation();
     }
@@ -140,6 +144,7 @@ class GameScene extends Phaser.Scene {
                 }
             }
         }, this);
+        this.playerSound.play();
         turnCube.anims.play(animName);
     }
 
@@ -240,6 +245,7 @@ class GameScene extends Phaser.Scene {
                 }
             }
         }, this);
+        this.botSound.play();
         turnCube.anims.play(animName);
     }
 
