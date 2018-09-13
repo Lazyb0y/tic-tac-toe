@@ -38,7 +38,7 @@ class GameEndScene extends Phaser.Scene {
         }
         else if (this.winner === PlayerType.Bot) {
             this.resultText.setTexture('looseText');
-            this.winnerSymbol.setTexture('looser');
+            this.winnerSymbol.setTexture('robotFace');
         }
         else {
             this.resultText.setTexture('drawText');
