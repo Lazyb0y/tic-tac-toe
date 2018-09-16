@@ -21,7 +21,7 @@ class GameEndScene extends Phaser.Scene {
         gameTitle.setOrigin(0.5, 0);
 
         this.resultText = this.add.image(T3.game.config.width / 2, (T3.game.config.height / 4) * 1.5, "drawText");
-        this.resultText.setOrigin(0.5, 1);
+        this.resultText.setOrigin(0.5, 0);
         this.resultText.alpha = 0;
 
         this.winnerSymbol = this.add.image(T3.game.config.width / 2, T3.game.config.height / 2, "egg");
@@ -95,7 +95,23 @@ class GameEndScene extends Phaser.Scene {
             duration: T3.GameOptions.animations.buttonTweenDelay,
             callbackScope: this,
             onComplete: function () {
-                this.scene.start(T3.GameOptions.scenes.mainMenuScene);
+                this.tweens.add({
+                    targets: [this.winnerSymbol],
+                    y: T3.game.config.height + 512,
+                    duration: T3.GameOptions.animations.buttonTweenDelay * 2,
+                    callbackScope: this,
+                    onComplete: function () {
+                        this.tweens.add({
+                            targets: [this.resultText],
+                            y: T3.game.config.height + 90,
+                            duration: T3.GameOptions.animations.buttonTweenDelay,
+                            callbackScope: this,
+                            onComplete: function () {
+                                this.scene.start(T3.GameOptions.scenes.mainMenuScene);
+                            }
+                        });
+                    }
+                });
             }
         });
     }
