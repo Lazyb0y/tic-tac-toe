@@ -148,10 +148,15 @@ class MainMenuScene extends Phaser.Scene {
                     duration: T3.GameOptions.animations.buttonTweenDelay,
                     callbackScope: this,
                     onComplete: function () {
-                        this.difficultyText.alpha = 1;
-                        this.arrowLeft.alpha = 1;
-                        this.arrowRight.alpha = 1;
-                        this.allowUserInput = true;
+                        this.tweens.add({
+                            targets: [this.difficultyText, this.arrowLeft, this.arrowRight],
+                            alpha: 1,
+                            duration: T3.GameOptions.animations.alphaTweenSpeed,
+                            callbackScope: this,
+                            onComplete: function () {
+                                this.allowUserInput = true;
+                            }
+                        });
                     }
                 });
             }
@@ -178,6 +183,12 @@ class MainMenuScene extends Phaser.Scene {
         };
 
         this.time.addEvent(timerConfig);
+
+        this.tweens.add({
+            targets: [this.difficultyText, this.arrowLeft, this.arrowRight],
+            alpha: 0,
+            duration: T3.GameOptions.animations.alphaTweenSpeed,
+        });
     }
 
     switchDifficulty(direction) {
