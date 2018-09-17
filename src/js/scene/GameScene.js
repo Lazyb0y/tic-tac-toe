@@ -23,6 +23,8 @@ class GameScene extends Phaser.Scene {
         this.previousClientHeight = 0;
 
         this.isPortraitMode = true;
+
+        this.usedCubesSprite = null;
     }
 
     create() {
@@ -44,6 +46,8 @@ class GameScene extends Phaser.Scene {
         /* Initializing sounds */
         this.playerSound = this.sound.add("playerSound");
         this.botSound = this.sound.add("botSound");
+
+        this.usedCubesSprite = this.add.group();
 
         this.initBoard();
         this.showEntryAnimation();
@@ -190,7 +194,7 @@ class GameScene extends Phaser.Scene {
                 /* Checking win status */
                 let winCubes = this.checkWin();
                 if (winCubes) {
-                    this.gameEnd(PlayerType.Human);
+                    this.gameEnd(winCubes, PlayerType.Human);
                 }
                 else {
                     this.time.delayedCall(T3.GameOptions.animations.botCubeDelay, function () {
@@ -201,6 +205,7 @@ class GameScene extends Phaser.Scene {
             }
         }, this);
         this.playerSound.play();
+        this.usedCubesSprite.add(turnCube);
         turnCube.anims.play(animName);
     }
 
@@ -274,7 +279,7 @@ class GameScene extends Phaser.Scene {
         }
 
         if (!nextEmptyCube) {
-            this.gameEnd(null);
+            this.gameEnd(null, null);
             return;
         }
         nextEmptyCube.used = true;
@@ -288,11 +293,11 @@ class GameScene extends Phaser.Scene {
                 /* Checking win status */
                 let winCubes = this.checkWin();
                 if (winCubes) {
-                    this.gameEnd(PlayerType.Bot);
+                    this.gameEnd(winCubes, PlayerType.Bot);
                 }
                 else {
                     if (!this.nextRandomEmptyCube()) {
-                        this.gameEnd(null);
+                        this.gameEnd(null, null);
                     }
                     else {
                         this.currentTurn = PlayerType.Human;
@@ -302,6 +307,7 @@ class GameScene extends Phaser.Scene {
             }
         }, this);
         this.botSound.play();
+        this.usedCubesSprite.add(turnCube);
         turnCube.anims.play(animName);
     }
 
@@ -351,9 +357,36 @@ class GameScene extends Phaser.Scene {
         return this.boardState[bestSpot.index];
     }
 
-    gameEnd(winner) {
+    gameEnd(winCubes, winner) {
         this.winner = winner;
         this.isPlayingReverse = true;
+
+        let loserCubes = [];
+        for (let i = 0; i < this.usedCubesSprite.children.size; i++) {
+            let cube = this.usedCubesSprite.children.entries[i];
+            let isWinCube = false;
+            if (winCubes) {
+                for (let j = 0; j < winCubes.length; j++) {
+                    if (cube.x === winCubes[j].center.x && cube.y === winCubes[j].center.y) {
+                        isWinCube = true;
+                        break;
+                    }
+                }
+            }
+            if (!isWinCube) {
+                loserCubes.push(cube);
+            }
+        }
+
+        if (loserCubes.length > 0) {
+            loserCubes.forEach(function (cube) {
+                this.tweens.add({
+                    targets: [cube],
+                    alpha: 0,
+                    duration: T3.GameOptions.animations.alphaTweenSpeed
+                });
+            }, this);
+        }
 
         let timerConfig = {
             delay: T3.GameOptions.animations.iconAppearAnimationDelay,
@@ -410,6 +443,6 @@ class GameScene extends Phaser.Scene {
 
     goToMainMenu() {
         this.isRestarting = true;
-        this.gameEnd(null);
+        this.gameEnd(null, null);
     }
 }
