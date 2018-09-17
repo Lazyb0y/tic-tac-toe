@@ -389,7 +389,7 @@ class GameScene extends Phaser.Scene {
         }
 
         let timerConfig = {
-            delay: T3.GameOptions.animations.iconAppearAnimationDelay,
+            delay: T3.GameOptions.animations.boardRemoveDelay,
             callback: function () {
                 this.board.anims.playReverse(T3.GameOptions.animations.keys.drawBoard);
             },
